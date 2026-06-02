@@ -1,0 +1,20 @@
+<div style="max-width: 400px; margin: 50px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px;">
+  <h2>Login</h2>
+  
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" style="display: flex; flex-direction: column; gap: 15px;">
+    <input formControlName="email" placeholder="Email" type="email" style="padding: 10px;">
+    <input formControlName="password" placeholder="Password" type="password" style="padding: 10px;">
+    
+    <button type="submit" [disabled]="loading" style="padding: 10px; background-color: #007bff; color: white; border: none; cursor: pointer;">
+      {{ loading ? 'Memuat...' : 'Masuk' }}
+    </button>
+  </form>
+
+  <p *ngIf="error" style="color: red; margin-top: 10px;">{{ error }}</p>
+  
+  <div style="margin-top: 20px; font-size: 0.9em; color: gray;">
+    <p>User: user@test.com</p>
+    <p>Admin: admin@test.com</p>
+    <p>Password: password123</p>
+  </div>
+</div>

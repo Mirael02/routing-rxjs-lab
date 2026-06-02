@@ -1,0 +1,40 @@
+<div style="padding: 20px; max-width: 1000px; margin: 0 auto;">
+  <ng-container *ngIf="data$ | async as data; else loading">
+    
+    <div style="display: flex; gap: 30px; margin-bottom: 40px; flex-wrap: wrap;">
+      <img [src]="data.thumbnail" [alt]="data.title" style="width: 300px; height: 300px; object-fit: contain; background: #f5f5f5; border-radius: 8px;">
+      
+      <div style="flex: 1; min-width: 300px;">
+        <h1 style="margin-top: 0;">{{ data.title }}</h1>
+        <p style="color: #e91e63; font-size: 24px; font-weight: bold;">{{ data.price | currency:'USD' }}</p>
+        <p style="color: #555; line-height: 1.6;">{{ data.description }}</p>
+        <div style="margin: 20px 0; padding: 10px; background: #e0f7fa; border-radius: 4px; display: inline-block;">
+          Stok tersedia: <strong>{{ data.stock }}</strong>
+        </div>
+        <br>
+        <button (click)="addToCart(data)" style="padding: 12px 24px; background: #007bff; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer;">
+          Tambah ke Keranjang
+        </button>
+      </div>
+    </div>
+
+    <section>
+      <h2 style="border-bottom: 2px solid #eee; padding-bottom: 10px;">Produk Terkait</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; margin-top: 20px;">
+        <div *ngFor="let p of data.related" 
+             [routerLink]="['/products', p.id]" 
+             style="border: 1px solid #ddd; padding: 10px; border-radius: 8px; cursor: pointer; text-align: center;">
+          <img [src]="p.thumbnail" style="width: 100px; height: 100px; object-fit: contain;">
+          <h4 style="margin: 10px 0 5px 0; font-size: 14px;">{{ p.title }}</h4>
+        </div>
+      </div>
+    </section>
+
+  </ng-container>
+
+  <ng-template #loading>
+    <div style="text-align: center; padding: 50px; color: gray;">
+      Memuat data produk secara paralel...
+    </div>
+  </ng-template>
+</div>

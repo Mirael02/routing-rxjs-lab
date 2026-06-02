@@ -1,0 +1,41 @@
+<div style="padding: 20px; max-width: 800px; margin: 0 auto;">
+  <h1>Keranjang Belanja <span style="background: #007bff; color: white; padding: 2px 8px; border-radius: 12px; font-size: 16px;">{{ cartService.itemCount$ | async }}</span></h1>
+
+  <ng-container *ngIf="!(cartService.isEmpty$ | async); else empty">
+    <div style="display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px;">
+      <div *ngFor="let item of cartService.cart$ | async" style="display: flex; align-items: center; gap: 15px; border: 1px solid #eee; padding: 10px; border-radius: 8px;">
+        <img [src]="item.thumbnail" [alt]="item.title" width="80" style="border-radius: 4px; background: #f5f5f5;">
+        <div style="flex: 1;">
+          <h3 style="margin: 0 0 5px 0;">{{ item.title }}</h3>
+          <p style="margin: 0; color: #e91e63;">{{ item.price | currency:'USD' }}</p>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <button (click)="updateQty(item.id, item.quantity - 1)" style="padding: 5px 10px; cursor: pointer;">-</button>
+          <span>{{ item.quantity }}</span>
+          <button (click)="updateQty(item.id, item.quantity + 1)" style="padding: 5px 10px; cursor: pointer;">+</button>
+        </div>
+        <div style="font-weight: bold; width: 80px; text-align: right;">
+          {{ item.price * item.quantity | currency:'USD' }}
+        </div>
+        <button (click)="removeItem(item.id)" style="background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">X</button>
+      </div>
+    </div>
+
+    <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; text-align: right;">
+      <h2 style="margin-top: 0;">Total: {{ cartService.subtotal$ | async | currency:'USD' }}</h2>
+      <div style="display: flex; gap: 10px; justify-content: flex-end;">
+        <button (click)="cartService.clearCart()" style="padding: 10px 20px; background: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer;">Kosongkan Keranjang</button>
+        <button (click)="checkout()" [disabled]="isCheckingOut" style="padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer;">
+          {{ isCheckingOut ? 'Memproses...' : 'Bayar Sekarang' }}
+        </button>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #empty>
+    <div style="text-align: center; padding: 50px; color: gray; border: 1px dashed #ccc; border-radius: 8px;">
+      <p>Keranjang Anda kosong</p>
+      <a routerLink="/products" style="color: #007bff; text-decoration: none; font-weight: bold;">Mulai Belanja</a>
+    </div>
+  </ng-template>
+</div>
