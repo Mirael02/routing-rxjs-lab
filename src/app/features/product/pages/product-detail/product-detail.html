@@ -30,6 +30,10 @@
       </div>
     </section>
 
+    <button (click)="toggleWishlist(data)" [class.active]="isFavorite$ | async">
+      {{ (isFavorite$ | async) ? '❤️ Hapus dari Wishlist' : '🤍 Tambah ke Wishlist' }}
+    </button>
+
   </ng-container>
 
   <ng-template #loading>

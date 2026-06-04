@@ -1,22 +1,29 @@
-<nav style="display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; background: #007bff; color: white; position: fixed; top: 0; left: 0; right: 0; z-index: 1000; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-  <a routerLink="/home" style="color: white; text-decoration: none; font-size: 20px; font-weight: bold;">ShopApp</a>
+<nav class="navbar">
+  <a routerLink="/home" class="brand">ShopApp</a>
   
-  <div style="display: flex; gap: 20px; align-items: center;">
-    <a routerLink="/products" style="color: white; text-decoration: none; font-weight: 500;">Produk</a>
+  <div class="nav-links">
+    <a routerLink="/products" routerLinkActive="active">Produk</a>
     
-    <a routerLink="/cart" style="color: white; text-decoration: none; font-weight: 500; display: flex; align-items: center; gap: 5px;">
+    <a routerLink="/cart" class="cart-link">
       Keranjang
-      <span *ngIf="count$ | async as count" style="background: #e91e63; padding: 2px 8px; border-radius: 12px; font-size: 12px; font-weight: bold;">
-        {{ count }}
+      <span class="badge" *ngIf="(navStats$ | async) as stats">
+        {{ stats.cart }}
       </span>
     </a>
 
-    <ng-container *ngIf="isLoggedIn$ | async; else loginLink">
-      <a routerLink="/admin" style="color: white; text-decoration: none; font-weight: 500;">Admin</a>
-      <a (click)="logout()" style="color: white; text-decoration: none; cursor: pointer; border: 1px solid white; padding: 5px 10px; border-radius: 4px; margin-left: 10px;">Keluar</a>
-    </ng-container>
+    <a routerLink="/wishlist" class="wishlist-link">
+      Wishlist
+      <span class="badge" *ngIf="(navStats$ | async) as stats">
+        {{ stats.wishlist }}
+      </span>
+    </a>
+
+    <a *ngIf="(isLoggedIn$ | async); else loginLink" (click)="logout()" class="logout" style="cursor: pointer;">
+      Keluar
+    </a>
+    
     <ng-template #loginLink>
-      <a routerLink="/login" style="color: white; text-decoration: none; border: 1px solid white; padding: 5px 10px; border-radius: 4px; margin-left: 10px;">Masuk</a>
+      <a routerLink="/login">Masuk</a>
     </ng-template>
   </div>
 </nav>

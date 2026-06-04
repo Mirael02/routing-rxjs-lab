@@ -25,29 +25,23 @@ export class ProductList implements OnInit {
   ngOnInit() {
     this.categories$ = this.productService.getCategories();
 
-    // Menggabungkan nilai dari kolom pencarian dan dropdown kategori
     this.products$ = combineLatest([
-      this.searchControl.valueChanges.pipe(
-        startWith(''),
-        debounceTime(350), // Tunggu 350ms setelah user berhenti mengetik
-        distinctUntilChanged()
-      ),
-      this.categoryControl.valueChanges.pipe(startWith(''))
-    ]).pipe(
-      tap(() => this.isLoading = true),
-      switchMap(([searchTerm, category]) => 
-        this.productService.search(searchTerm || '').pipe(
-          map(products => category 
-            ? products.filter(p => p.category === category)
-            : products
-          )
-        )
-      ),
-      tap(() => this.isLoading = false),
-      catchError(() => {
-        this.isLoading = false;
-        return of([]);
-      })
-    );
-  }
+    this.searchControl.valueChanges.pipe(
+      startWith(''), // Bagian ini wajib ada
+      debounceTime(350),
+      distinctUntilChanged()
+    ),
+    this.categoryControl.valueChanges.pipe(
+      startWith('') // Bagian ini juga wajib ada
+    )
+      ]).pipe(
+    tap(() => this.isLoading = true),
+    switchMap(([searchTerm, category]) =>
+      this.productService.search(searchTerm || '').pipe(
+        map(products => category ? products.filter(p => p.category === category) : products)
+    )
+  ),
+  tap(() => this.isLoading = false),
+  catchError(() => of([]))
+);  }
 }

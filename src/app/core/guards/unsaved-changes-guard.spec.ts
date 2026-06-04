@@ -1,11 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 import { CanDeactivateFn } from '@angular/router';
 
-import { unsavedChangesGuard } from './unsaved-changes-guard';
+import { unsavedChangesGuard, HasUnsavedChanges } from './unsaved-changes-guard';
 
 describe('unsavedChangesGuard', () => {
-  const executeGuard: CanDeactivateFn<unknown> = (...guardParameters) =>
-    TestBed.runInInjectionContext(() => unsavedChangesGuard(...guardParameters));
+  // Tambahkan <HasUnsavedChanges> di sini agar tipe datanya sesuai
+  const executeGuard: CanDeactivateFn<HasUnsavedChanges> = (...guardParameters) => 
+      TestBed.runInInjectionContext(() => unsavedChangesGuard(...guardParameters));
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
