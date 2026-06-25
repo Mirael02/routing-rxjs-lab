@@ -1,6 +1,12 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
+import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Observable } from 'rxjs';
 import { map, switchMap, distinctUntilChanged } from 'rxjs/operators';
 import { ProductService, ProductWithReviews } from '../../services/product';
@@ -10,8 +16,9 @@ import { WishlistService } from '../../../../core/services/wishlist-service';
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [CommonModule, RouterModule],
-  templateUrl: './product-detail.html'
+  imports: [CommonModule, RouterModule, MatCardModule, MatChipsModule, MatButtonModule, MatIconModule, MatDividerModule, MatProgressSpinnerModule],
+  templateUrl: './product-detail.html',
+  styleUrl: './product-detail.scss',
 })
 export class ProductDetail implements OnInit {
   private route = inject(ActivatedRoute);
@@ -23,16 +30,14 @@ export class ProductDetail implements OnInit {
   data$!: Observable<ProductWithReviews>;
 
   ngOnInit() {
-    // Setup stream untuk mengambil detail produk beserta review
     this.data$ = this.route.paramMap.pipe(
-      map(params => Number(params.get('id'))),
+      map((params) => Number(params.get('id'))),
       distinctUntilChanged(),
-      switchMap(id => this.productService.getDetailWithReviews(id))
+      switchMap((id) => this.productService.getDetailWithReviews(id))
     );
 
-    // Setup stream untuk mengecek status wishlist produk ini
     this.isFavorite$ = this.route.paramMap.pipe(
-      switchMap(params => this.wishlistService.isInWishlist(Number(params.get('id'))))
+      switchMap((params) => this.wishlistService.isInWishlist(Number(params.get('id'))))
     );
   }
 

@@ -1,9 +1,4 @@
 <app-navbar></app-navbar>
-
-<div style="padding-top: 70px;">
+<main>
   <router-outlet></router-outlet>
-</div>
-
-<div *ngIf="toast$ | async as toast" style="position: fixed; bottom: 30px; right: 30px; background: #323232; color: white; padding: 15px 25px; border-radius: 4px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); z-index: 1100; font-weight: 500;">
-  {{ toast }}
-</div>
+</main>

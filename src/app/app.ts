@@ -1,17 +1,12 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { CommonModule } from '@angular/common';
 import { NavbarComponent } from './shared/components/navbar/navbar';
-import { NotificationService } from './core/services/notification';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, NavbarComponent],
-  templateUrl: './app.html'
+  imports: [RouterOutlet, NavbarComponent],
+  templateUrl: './app.html',
+  styleUrl: './app.scss',
 })
-export class App {
-  private notif = inject(NotificationService);
-  // Observable untuk dibaca oleh template
-  toast$ = this.notif.activeToast$;
-}
+export class App {}

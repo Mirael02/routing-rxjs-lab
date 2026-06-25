@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AdminDashboard } from './admin-dashboard';
 
 describe('AdminDashboard', () => {
@@ -8,7 +8,7 @@ describe('AdminDashboard', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AdminDashboard],
+      imports: [AdminDashboard, NoopAnimationsModule],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AdminDashboard);

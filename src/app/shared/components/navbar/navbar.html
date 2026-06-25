@@ -1,29 +1,30 @@
-<nav class="navbar">
-  <a routerLink="/home" class="brand">ShopApp</a>
-  
-  <div class="nav-links">
-    <a routerLink="/products" routerLinkActive="active">Produk</a>
-    
-    <a routerLink="/cart" class="cart-link">
-      Keranjang
-      <span class="badge" *ngIf="(navStats$ | async) as stats">
-        {{ stats.cart }}
-      </span>
-    </a>
-
-    <a routerLink="/wishlist" class="wishlist-link">
-      Wishlist
-      <span class="badge" *ngIf="(navStats$ | async) as stats">
-        {{ stats.wishlist }}
-      </span>
-    </a>
-
-    <a *ngIf="(isLoggedIn$ | async); else loginLink" (click)="logout()" class="logout" style="cursor: pointer;">
+<mat-toolbar color="primary" class="sticky-toolbar">
+  <a mat-button routerLink="/home" class="brand">ShopApp</a>
+  <span class="spacer"></span>
+  <a mat-button routerLink="/products" routerLinkActive="active-link">
+    <mat-icon>inventory_2</mat-icon>
+    Produk
+  </a>
+  <a mat-button routerLink="/cart" routerLinkActive="active-link"
+     [matBadge]="(navStats$ | async)?.cart ?? 0" matBadgeColor="accent" matBadgeSize="small">
+    <mat-icon>shopping_cart</mat-icon>
+    Keranjang
+  </a>
+  <a mat-button routerLink="/wishlist" routerLinkActive="active-link"
+     [matBadge]="(navStats$ | async)?.wishlist ?? 0" matBadgeColor="accent" matBadgeSize="small">
+    <mat-icon>favorite</mat-icon>
+    Wishlist
+  </a>
+  <ng-container *ngIf="(isLoggedIn$ | async); else loginLink">
+    <button mat-button (click)="logout()">
+      <mat-icon>logout</mat-icon>
       Keluar
+    </button>
+  </ng-container>
+  <ng-template #loginLink>
+    <a mat-button routerLink="/login">
+      <mat-icon>login</mat-icon>
+      Masuk
     </a>
-    
-    <ng-template #loginLink>
-      <a routerLink="/login">Masuk</a>
-    </ng-template>
-  </div>
-</nav>
+  </ng-template>
+</mat-toolbar>

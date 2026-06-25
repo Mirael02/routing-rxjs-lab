@@ -1,0 +1,34 @@
+.sticky-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.brand {
+  font-size: 1.4rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  margin-right: 8px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+a[mat-button],
+button[mat-button] {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  mat-icon {
+    margin-right: 2px;
+  }
+}
+
+.active-link {
+  background: rgba(255, 255, 255, 0.15);
+}
